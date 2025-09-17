@@ -1,0 +1,12 @@
+#Checking if there are dupe tracks
+#SELECT COUNT(DISTINCT(track_id)) AS distinct_track_ids, COUNT(*) AS total_rows
+
+#Checking details of dupe tracks
+SELECT *
+FROM `spotify-analysis-472323.spotify_dataset.spotify_raw`
+WHERE track_id in (SELECT
+      track_id, 
+      FROM `spotify-analysis-472323.spotify_dataset.spotify_raw`
+      GROUP BY track_id
+      HAVING COUNT(*) > 1)
+ORDER BY track_id ASC
